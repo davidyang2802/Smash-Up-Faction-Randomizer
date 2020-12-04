@@ -291,12 +291,15 @@ namespace Smash_Up_Faction_Randomizer
         Random random;
 
         #region Selection Mode
+        /// <summary>
+        /// Method that starts the selection process
+        /// </summary>
         private void beginSelection()
         {
             // display the controls for the selection mode
             displaySelectionMode();
 
-            // we'll need to display the player and pool data
+            // we'll need to display the player and pool data, which is done with a tree view
             tvPlayers.BeginUpdate();
             foreach (var kvp in SmashUp.Players)
             {
@@ -316,21 +319,29 @@ namespace Smash_Up_Faction_Randomizer
             processNextMode();
         }
 
+        /// <summary>
+        /// Method that displays the controls used by selection mode
+        /// </summary>
         private void displaySelectionMode()
         {
             tvPlayers.Visible = true;
             tvPlayers.BringToFront();
         }
 
+        /// <summary>
+        /// Method that processes the next mode, meaning it will check if the next mode is Allot, Draft, Swap or Drop, then act accordingly
+        /// </summary>
         private void processNextMode()
         {
+            // iMode keeps track of which mode the randomizer is currently at - if it is beyond the modes array, that means we've finished
             if (SmashUp.iMode >= SmashUp.Modes.Length)
             {
                 return;
             }
+            // Check what the mode is, and act accordingly
             switch (SmashUp.Modes[SmashUp.iMode])
             {
-                // If the next mode is Allot
+                // If the next mode is Allot, the randomizer should do all allots at once and randomize a number of factions to each player
                 case "Allot":
                     // we want to do all the consecutive Allots at once
                     int num = 1;
@@ -340,60 +351,56 @@ namespace Smash_Up_Faction_Randomizer
                         num++;
                     }
                     AllotFactions(num);
-                    addFactionstoPlayers();
+                    // Once we've updated the player data and also the tree view, we proceed to the next mode
                     SmashUp.iMode++;
                     processNextMode();
                     break;
+                    // If the next mode is Draft, we need to display and update the draft controls - Draft is driven by user input
                 case "Draft":
                     displayDraftControls();
                     updateDraftControls();
                     break;
+                    // If the next mode is Swap, we need to display and update the swap controls - Swap is driven by user input
                 case "Swap":
                     displaySwapControls();
                     updateSwapControls();
                     break;
-                case "Pool":
+                    // If the next mode is Drop, we need to display and update the drop controls - Drop is driven by user input
+                case "Drop":
                     break;
                 default:
                     break;
             }
         }
 
-        private void addFactionstoPlayers()
+        /// <summary>
+        /// Method that allot factions from the faction pool to each player
+        /// </summary>
+        /// <param name="num">The number of factions alloted to each player from the pool</param>
+        private void AllotFactions(int num)
         {
             tvPlayers.BeginUpdate();
-            foreach (var kvp in SmashUp.Players)
+            for (int i = 0; i < num; i++)
             {
-                if (kvp.Value.Count > tvPlayers.Nodes[kvp.Key].Nodes.Count)
+                foreach (var kvp in SmashUp.Players)
                 {
-                    for (int i = tvPlayers.Nodes[kvp.Key].Nodes.Count; i < kvp.Value.Count; i++)
-                    {
-                        tvPlayers.Nodes[kvp.Key].Nodes.Add(kvp.Value[i], kvp.Value[i]);
-                    }
+                    int iPool = random.Next(0, SmashUp.Pool.Count);
+                    // Add the faction to the player data and the treeview
+                    kvp.Value.Add(SmashUp.Pool[iPool]);
+                    tvPlayers.Nodes[kvp.Key].Nodes.Add(SmashUp.Pool[iPool], SmashUp.Pool[iPool]);
+                    // Remove the faction from the Pool
+                    tvPlayers.Nodes["Faction Pool"].Nodes[SmashUp.Pool[iPool]].Remove();
+                    SmashUp.Pool.RemoveAt(iPool);
+
                 }
             }
             tvPlayers.EndUpdate();
             tvPlayers.ExpandAll();
         }
 
-        private void AllotFactions(int num)
-        {
-            for (int i = 0; i < num; i++)
-            {
-                foreach (var kvp in SmashUp.Players)
-                {
-                    int iPool = random.Next(0, SmashUp.Pool.Count);
-                    kvp.Value.Add(SmashUp.Pool[iPool]);
-                    tvPlayers.Nodes["Faction Pool"].Nodes[SmashUp.Pool[iPool]].Remove();
-                    SmashUp.Pool.RemoveAt(iPool);
-                }
-            }
-            if (tvPlayers.Nodes["Faction Pool"].Nodes.Count == 0)
-            {
-                tvPlayers.Nodes["Faction Pool"].Remove();
-            }
-        }
-
+        /// <summary>
+        /// Method that displays the draft controls
+        /// </summary>
         private void displayDraftControls()
         {
             tbSelectionNote.Visible = true;
@@ -402,6 +409,9 @@ namespace Smash_Up_Faction_Randomizer
             btnDraft.Visible = true;
         }
 
+        /// <summary>
+        /// Method that hides the draft controls
+        /// </summary>
         private void hideDraftControls()
         {
             tbSelectionNote.Visible = false;
@@ -410,9 +420,14 @@ namespace Smash_Up_Faction_Randomizer
             btnDraft.Visible = false;
         }
 
+        /// <summary>
+        /// Method that updates the draft controls - this is necessary as the controls should change as we go through the players
+        /// </summary>
         private void updateDraftControls()
         {
             tbSelectionNote.Text = "Player " + (SmashUp.iPlayers + 1).ToString() + "'s turn to draft a faction";
+            // Clear the combo box and re-add the factions
+            // It would likely be more efficient to do remove the faction from the Items list one by one, but the performance hit isn't really noticable
             cbFactionPool.Items.Clear();
             foreach (string faction in SmashUp.Pool)
             {
@@ -421,8 +436,15 @@ namespace Smash_Up_Faction_Randomizer
             cbFactionPool.SelectedIndex = 0;
         }
 
+        /// <summary>
+        /// Event method triggered when the user clicks the Draft button.
+        /// The faction pool combo-box should always have a value, so this method would draft the selected faction to the current player
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDraft_Click(object sender, EventArgs e)
         {
+            // Update the Players and Pool datasets and also the treeview
             string selection = cbFactionPool.SelectedItem.ToString();
             tvPlayers.BeginUpdate();
             SmashUp.Pool.Remove(selection);
@@ -432,27 +454,40 @@ namespace Smash_Up_Faction_Randomizer
             tvPlayers.EndUpdate();
             tvPlayers.ExpandAll();
 
+            // Once the controls are updated, we'll need to make a decision based on which player we're at
+            // The draft order should be reversed whenever we reach the last player.
+            // So for example, if the first draft goes from players 1 to 3, the next draft should go from players 3 to 1
+            // This is accomplished by maintaining a flag called DraftReversed - whenever we reach the end of a draft round, we change it's value
+            // So we need to check if we're at the last player of the draft round, based on iPlayers and DraftReversed
             if ((SmashUp.DraftReversed && SmashUp.iPlayers == 0) || (!SmashUp.DraftReversed && SmashUp.iPlayers >= SmashUp.Players.Count - 1))
             {
                 SmashUp.DraftReversed = !SmashUp.DraftReversed;
+                // Since we've reached the end of the draft round, proceed to the next node - note that it may not necessarily be another draft
                 hideDraftControls();
                 SmashUp.iMode++;
                 processNextMode();
             }
+            // Otherwise, we aren't at the end of a draft round, so we need to update iPlayers and the draft controls
             else
             {
+                // If the draft isn't reversed iPlayers increases
                 if (!SmashUp.DraftReversed)
                 {
                     SmashUp.iPlayers++;
                 }
+                // If the draft is reversed, iPlayers decreases
                 else
                 {
                     SmashUp.iPlayers--;
                 }
+                // Update the draft controls, as we need to proceed to the next player
                 updateDraftControls();
             }
         }
 
+        /// <summary>
+        /// Method that displays the swap controls
+        /// </summary>
         private void displaySwapControls()
         {
             tbSelectionNote.Visible = true;
@@ -463,6 +498,9 @@ namespace Smash_Up_Faction_Randomizer
             btnSwap.Visible = true;
         }
 
+        /// <summary>
+        /// Method that hides the swap controls
+        /// </summary>
         private void hideSwapControls()
         {
             tbSelectionNote.Visible = false;
@@ -473,9 +511,14 @@ namespace Smash_Up_Faction_Randomizer
             btnSwap.Visible = false;
         }
 
+        /// <summary>
+        /// Method that updates the swap controls - this is necessary as the controls should change as we go through the players
+        /// </summary>
         private void updateSwapControls()
         {
             tbSelectionNote.Text = "Player " + (SmashUp.iPlayers + 1).ToString() + "'s turn to swap a faction";
+            // Clear the pool combo box and re-add the factions
+            // It would likely be more efficient to do remove the faction from the Items list one by one, but the performance hit isn't really noticable
             cbFactionPool.Items.Clear();
             foreach (string faction in SmashUp.Pool)
             {
@@ -483,6 +526,7 @@ namespace Smash_Up_Faction_Randomizer
             }
             cbFactionPool.SelectedIndex = 0;
             tbSwap.Text = "Player " + (SmashUp.iPlayers + 1).ToString() + "'s faction to swap";
+            // Clear the swap combox box and re-add the factions - this is required as the player should be different
             cbSwap.Items.Clear();
             foreach (string faction in SmashUp.Players["Player " + (SmashUp.iPlayers + 1).ToString()])
             {
@@ -492,6 +536,12 @@ namespace Smash_Up_Faction_Randomizer
         }
         #endregion
 
+        /// <summary>
+        /// Event method triggered when the user clicks the Swap button.
+        /// This method swaps a faction from the pool with one of the players factions, as selected from the swap controls
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSwap_Click(object sender, EventArgs e)
         {
             string selection = cbFactionPool.SelectedItem.ToString();
@@ -513,6 +563,9 @@ namespace Smash_Up_Faction_Randomizer
             tvPlayers.EndUpdate();
             tvPlayers.ExpandAll();
 
+            // For now, we'll assume that swaps always start from Player 1 and iPlayers increases
+            // It probably should actually reverse order like the drafts do, but we should consider the funtionality
+            // Should Draft, Swap & Drop all share one flag or separate flags? This is actually a serious consideration
             if (SmashUp.iPlayers >= SmashUp.Players.Count - 1)
             {
                 hideSwapControls();
@@ -533,9 +586,12 @@ namespace Smash_Up_Faction_Randomizer
     /// </summary>
     public sealed class Singleton
     {
+        // Singleton implementation using Lazy<T>
         private Singleton() { }
         private static readonly Lazy<Singleton> lazy = new Lazy<Singleton>(() => new Singleton());
-
+        /// <summary>
+        /// Public instance of the Singleton class
+        /// </summary>
         public static Singleton Instance
         {
             get { return lazy.Value; }
@@ -701,7 +757,7 @@ namespace Smash_Up_Faction_Randomizer
             /// Allot : each player recieves a random faction from the pool
             /// Draft : each player selects one faction from the pool
             /// Swap : each player swaps one of their factions with one from the pool
-            /// Pool : each player selects one of their factions and adds it to the pool
+            /// Drop : each player selects one of their factions and adds it to the pool
             /// </summary>
             private string[] _Modes;
             public string[] Modes
@@ -758,6 +814,7 @@ namespace Smash_Up_Faction_Randomizer
         /// </summary>
         public void Initialize()
         {
+            // First add all the factions with their corresponding set
             Factions = new List<Faction>();
             Factions.Add(new Faction("Aliens", "Base"));
             Factions.Add(new Faction("Dinosaurs", "Base"));
@@ -849,6 +906,7 @@ namespace Smash_Up_Faction_Randomizer
             Factions.Add(new Faction("Sheep", "Promos"));
             Factions.Add(new Faction("Penguins", "Promos"));
 
+            // Then add all the sets - we can simply use the set data already in Factions
             Sets = new List<Set>();
             foreach (Faction f in Factions)
             {
@@ -858,6 +916,12 @@ namespace Smash_Up_Faction_Randomizer
                 }
             }
 
+            // Lastly, add the game modes. This initialization is more in-depth, as you need to understand how the modes will be used by the radomizer
+            // Essentially, the modes tell the radomizer the sequence in which the players interact with the faction pool
+            // Allot means the players randomly recieve a faction from the pool
+            // Draft means the players select a faction from the pool
+            // Swap means the players swap one of their factions with another from the pool
+            // Drop means the players drop one of their factions, and it's added to the pool
             GameModes = new List<GameMode>();
             GameModes.Add(new GameMode("Regular", 2));
             GameModes[GameModes.Count - 1].AddDescription("Each player receives 2 random factions.");
@@ -876,7 +940,7 @@ namespace Smash_Up_Faction_Randomizer
             GameModes[GameModes.Count - 1].AddModes(new string[] { "Allot", "Allot", "Swap" });
             GameModes.Add(new GameMode("Select Swap", 3));
             GameModes[GameModes.Count - 1].AddDescription("Each player recives 3 random factions and select 2, with the third entering the pool. Players can swap one faction.");
-            GameModes[GameModes.Count - 1].AddModes(new string[] { "Allot", "Allot", "Allot", "Pool", "Swap" });
+            GameModes[GameModes.Count - 1].AddModes(new string[] { "Allot", "Allot", "Allot", "Drop", "Swap" });
         }
 
         private List<string> _Locks;
