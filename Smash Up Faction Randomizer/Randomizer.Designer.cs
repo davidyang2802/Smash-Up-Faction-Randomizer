@@ -49,6 +49,8 @@
             this.tbSwap = new System.Windows.Forms.TextBox();
             this.cbSwap = new System.Windows.Forms.ComboBox();
             this.btnSwap = new System.Windows.Forms.Button();
+            this.cbDrop = new System.Windows.Forms.ComboBox();
+            this.btnDrop = new System.Windows.Forms.Button();
             this.tabsLists.SuspendLayout();
             this.tabSets.SuspendLayout();
             this.tabFactions.SuspendLayout();
@@ -61,7 +63,7 @@
             this.checklistSets.FormattingEnabled = true;
             this.checklistSets.Location = new System.Drawing.Point(0, 3);
             this.checklistSets.Name = "checklistSets";
-            this.checklistSets.Size = new System.Drawing.Size(551, 550);
+            this.checklistSets.Size = new System.Drawing.Size(551, 537);
             this.checklistSets.TabIndex = 1;
             // 
             // btnSmashUp
@@ -117,7 +119,7 @@
             this.checklistFactions.FormattingEnabled = true;
             this.checklistFactions.Location = new System.Drawing.Point(7, 13);
             this.checklistFactions.Name = "checklistFactions";
-            this.checklistFactions.Size = new System.Drawing.Size(551, 511);
+            this.checklistFactions.Size = new System.Drawing.Size(551, 496);
             this.checklistFactions.TabIndex = 3;
             // 
             // tabLocks
@@ -137,7 +139,7 @@
             this.checklistLocks.FormattingEnabled = true;
             this.checklistLocks.Location = new System.Drawing.Point(7, 1);
             this.checklistLocks.Name = "checklistLocks";
-            this.checklistLocks.Size = new System.Drawing.Size(551, 511);
+            this.checklistLocks.Size = new System.Drawing.Size(551, 496);
             this.checklistLocks.TabIndex = 2;
             // 
             // cbFactionPool
@@ -272,11 +274,34 @@
             this.btnSwap.Visible = false;
             this.btnSwap.Click += new System.EventHandler(this.btnSwap_Click);
             // 
+            // cbDrop
+            // 
+            this.cbDrop.FormattingEnabled = true;
+            this.cbDrop.Location = new System.Drawing.Point(20, 740);
+            this.cbDrop.Name = "cbDrop";
+            this.cbDrop.Size = new System.Drawing.Size(570, 33);
+            this.cbDrop.TabIndex = 17;
+            this.cbDrop.Visible = false;
+            // 
+            // btnDrop
+            // 
+            this.btnDrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDrop.Location = new System.Drawing.Point(20, 785);
+            this.btnDrop.Name = "btnDrop";
+            this.btnDrop.Size = new System.Drawing.Size(570, 70);
+            this.btnDrop.TabIndex = 18;
+            this.btnDrop.Text = "Drop";
+            this.btnDrop.UseVisualStyleBackColor = true;
+            this.btnDrop.Visible = false;
+            this.btnDrop.Click += new System.EventHandler(this.btnDrop_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 879);
+            this.Controls.Add(this.btnDrop);
+            this.Controls.Add(this.cbDrop);
             this.Controls.Add(this.btnSwap);
             this.Controls.Add(this.cbSwap);
             this.Controls.Add(this.tbSwap);
@@ -329,6 +354,8 @@
         private System.Windows.Forms.TextBox tbSwap;
         private System.Windows.Forms.ComboBox cbSwap;
         private System.Windows.Forms.Button btnSwap;
+        private System.Windows.Forms.ComboBox cbDrop;
+        private System.Windows.Forms.Button btnDrop;
     }
 }
 

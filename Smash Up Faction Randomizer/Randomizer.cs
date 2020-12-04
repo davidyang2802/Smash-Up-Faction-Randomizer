@@ -367,6 +367,8 @@ namespace Smash_Up_Faction_Randomizer
                     break;
                     // If the next mode is Drop, we need to display and update the drop controls - Drop is driven by user input
                 case "Drop":
+                    displayDropControls();
+                    updateDropControls();
                     break;
                 default:
                     break;
@@ -534,7 +536,6 @@ namespace Smash_Up_Faction_Randomizer
             }
             cbSwap.SelectedIndex = 0;
         }
-        #endregion
 
         /// <summary>
         /// Event method triggered when the user clicks the Swap button.
@@ -579,6 +580,81 @@ namespace Smash_Up_Faction_Randomizer
                 updateSwapControls();
             }
         }
+
+        /// <summary>
+        /// Method that displays the drop controls
+        /// </summary>
+        private void displayDropControls()
+        {
+            tbSelectionNote.Visible = true;
+            cbDrop.Visible = true;
+            btnDrop.Visible = true;
+        }
+
+        /// <summary>
+        /// Method that hides the drop controls
+        /// </summary>
+        private void hideDropControls()
+        {
+            tbSelectionNote.Visible = false;
+            cbDrop.Visible = false;
+            btnDrop.Visible = false;
+        }
+
+        /// <summary>
+        /// Method that updates the drop controls - this is necessary as the controls should change as we go through the players
+        /// </summary>
+        private void updateDropControls()
+        {
+            tbSelectionNote.Text = "Player " + (SmashUp.iPlayers + 1).ToString() + "'s turn to drop a faction";
+            // Clear the swap combox box and re-add the factions - this is required as the player should be different
+            cbDrop.Items.Clear();
+            foreach (string faction in SmashUp.Players["Player " + (SmashUp.iPlayers + 1).ToString()])
+            {
+                cbDrop.Items.Add(faction);
+            }
+            cbDrop.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// Event method triggered when the user clicks the Drop button.
+        /// This method drops one of the player's factions and adds it to the faction pool.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDrop_Click(object sender, EventArgs e)
+        {
+            string selection = cbDrop.SelectedItem.ToString();
+            string drop = cbDrop.SelectedItem.ToString();
+            string playerkey = "Player " + (SmashUp.iPlayers + 1).ToString();
+            tvPlayers.BeginUpdate();
+            // First, add the selection to the pool
+            SmashUp.Pool.Add(selection);
+            tvPlayers.Nodes["Faction Pool"].Nodes.Add(selection, selection);
+            // Remove the selection from the player
+            SmashUp.Players[playerkey].Remove(selection);
+            tvPlayers.Nodes[playerkey].Nodes[selection].Remove();
+            tvPlayers.EndUpdate();
+            tvPlayers.ExpandAll();
+
+            // For now, we'll assume that swaps always start from Player 1 and iPlayers increases
+            // It probably should actually reverse order like the drafts do, but we should consider the funtionality
+            // Should Draft, Swap & Drop all share one flag or separate flags? This is actually a serious consideration
+            if (SmashUp.iPlayers >= SmashUp.Players.Count - 1)
+            {
+                hideDropControls();
+                SmashUp.iMode++;
+                SmashUp.iPlayers = 0;
+                processNextMode();
+            }
+            else
+            {
+                SmashUp.iPlayers++;
+                updateDropControls();
+            }
+        }
+        #endregion
+
     }
 
     /// <summary>
