@@ -53,6 +53,7 @@
             this.btnDrop = new System.Windows.Forms.Button();
             this.btnRandom = new System.Windows.Forms.Button();
             this.btnPass = new System.Windows.Forms.Button();
+            this.btnReturn = new System.Windows.Forms.Button();
             this.tabsLists.SuspendLayout();
             this.tabSets.SuspendLayout();
             this.tabFactions.SuspendLayout();
@@ -208,7 +209,6 @@
             this.tbPlayerCount.TabIndex = 8;
             this.tbPlayerCount.Text = "Player Count :";
             this.tbPlayerCount.Visible = false;
-            this.tbPlayerCount.TextChanged += new System.EventHandler(this.tbPlayerCount_TextChanged);
             // 
             // tbGameMode
             // 
@@ -334,11 +334,24 @@
             this.btnPass.Visible = false;
             this.btnPass.Click += new System.EventHandler(this.btnPass_Click);
             // 
+            // btnReturn
+            // 
+            this.btnReturn.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReturn.Location = new System.Drawing.Point(10, 630);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(600, 70);
+            this.btnReturn.TabIndex = 21;
+            this.btnReturn.Text = "Return";
+            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Visible = false;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 879);
+            this.Controls.Add(this.btnReturn);
             this.Controls.Add(this.btnPass);
             this.Controls.Add(this.btnRandom);
             this.Controls.Add(this.btnDrop);
@@ -399,6 +412,7 @@
         private System.Windows.Forms.Button btnDrop;
         private System.Windows.Forms.Button btnRandom;
         private System.Windows.Forms.Button btnPass;
+        private System.Windows.Forms.Button btnReturn;
     }
 }
 

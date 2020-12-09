@@ -325,7 +325,14 @@ namespace Smash_Up_Faction_Randomizer
         private void displaySelectionMode()
         {
             tvPlayers.Visible = true;
-            tvPlayers.BringToFront();
+        }
+
+        /// <summary>
+        /// Method that hides the controls used by selection mode
+        /// </summary>
+        private void hideSelectionMode()
+        {
+            tvPlayers.Visible = false;
         }
 
         /// <summary>
@@ -336,6 +343,7 @@ namespace Smash_Up_Faction_Randomizer
             // iMode keeps track of which mode the randomizer is currently at - if it is beyond the modes array, that means we've finished
             if (SmashUp.iMode >= SmashUp.Modes.Length)
             {
+                btnReturn.Visible = true;
                 return;
             }
             // Check what the mode is, and act accordingly
@@ -489,6 +497,12 @@ namespace Smash_Up_Faction_Randomizer
             }
         }
 
+        /// <summary>
+        /// Event method triggered when the user clicks the Random button.
+        /// This method will randomly select a faction for the current player from the faction pool
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRandom_Click(object sender, EventArgs e)
         {
             Random random = new Random();
@@ -727,9 +741,20 @@ namespace Smash_Up_Faction_Randomizer
         }
         #endregion
 
-        private void tbPlayerCount_TextChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Event method for when the Return button is clicked. Returns to the Game Options mdoe
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReturn_Click(object sender, EventArgs e)
         {
-
+            hideSelectionMode();
+            hideDraftControls();
+            hideSwapControls();
+            hideDropControls();
+            btnReturn.Visible = false;
+            displayGameOptionsMode();
+            tvPlayers.Nodes.Clear();
         }
     }
 
