@@ -51,6 +51,8 @@
             this.btnSwap = new System.Windows.Forms.Button();
             this.cbDrop = new System.Windows.Forms.ComboBox();
             this.btnDrop = new System.Windows.Forms.Button();
+            this.btnRandom = new System.Windows.Forms.Button();
+            this.btnPass = new System.Windows.Forms.Button();
             this.tabsLists.SuspendLayout();
             this.tabSets.SuspendLayout();
             this.tabFactions.SuspendLayout();
@@ -61,17 +63,17 @@
             // 
             this.checklistSets.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checklistSets.FormattingEnabled = true;
-            this.checklistSets.Location = new System.Drawing.Point(0, 3);
+            this.checklistSets.Location = new System.Drawing.Point(0, 0);
             this.checklistSets.Name = "checklistSets";
-            this.checklistSets.Size = new System.Drawing.Size(551, 537);
+            this.checklistSets.Size = new System.Drawing.Size(584, 578);
             this.checklistSets.TabIndex = 1;
             // 
             // btnSmashUp
             // 
-            this.btnSmashUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.14286F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSmashUp.Location = new System.Drawing.Point(20, 785);
+            this.btnSmashUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSmashUp.Location = new System.Drawing.Point(10, 800);
             this.btnSmashUp.Name = "btnSmashUp";
-            this.btnSmashUp.Size = new System.Drawing.Size(570, 70);
+            this.btnSmashUp.Size = new System.Drawing.Size(600, 70);
             this.btnSmashUp.TabIndex = 5;
             this.btnSmashUp.Text = "SMASH UP!!!";
             this.btnSmashUp.UseVisualStyleBackColor = true;
@@ -83,10 +85,10 @@
             this.tabsLists.Controls.Add(this.tabSets);
             this.tabsLists.Controls.Add(this.tabFactions);
             this.tabsLists.Controls.Add(this.tabLocks);
-            this.tabsLists.Location = new System.Drawing.Point(20, 190);
+            this.tabsLists.Location = new System.Drawing.Point(10, 235);
             this.tabsLists.Name = "tabsLists";
             this.tabsLists.SelectedIndex = 0;
-            this.tabsLists.Size = new System.Drawing.Size(570, 580);
+            this.tabsLists.Size = new System.Drawing.Size(600, 550);
             this.tabsLists.TabIndex = 6;
             this.tabsLists.Visible = false;
             this.tabsLists.SelectedIndexChanged += new System.EventHandler(this.tabsLists_SelectedIndexChanged);
@@ -97,7 +99,7 @@
             this.tabSets.Location = new System.Drawing.Point(8, 39);
             this.tabSets.Name = "tabSets";
             this.tabSets.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSets.Size = new System.Drawing.Size(554, 533);
+            this.tabSets.Size = new System.Drawing.Size(584, 503);
             this.tabSets.TabIndex = 0;
             this.tabSets.Text = "Sets";
             this.tabSets.UseVisualStyleBackColor = true;
@@ -108,7 +110,7 @@
             this.tabFactions.Location = new System.Drawing.Point(8, 39);
             this.tabFactions.Name = "tabFactions";
             this.tabFactions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFactions.Size = new System.Drawing.Size(554, 533);
+            this.tabFactions.Size = new System.Drawing.Size(584, 503);
             this.tabFactions.TabIndex = 2;
             this.tabFactions.Text = "Factions";
             this.tabFactions.UseVisualStyleBackColor = true;
@@ -117,9 +119,9 @@
             // 
             this.checklistFactions.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checklistFactions.FormattingEnabled = true;
-            this.checklistFactions.Location = new System.Drawing.Point(7, 13);
+            this.checklistFactions.Location = new System.Drawing.Point(0, 0);
             this.checklistFactions.Name = "checklistFactions";
-            this.checklistFactions.Size = new System.Drawing.Size(551, 496);
+            this.checklistFactions.Size = new System.Drawing.Size(584, 578);
             this.checklistFactions.TabIndex = 3;
             // 
             // tabLocks
@@ -128,7 +130,7 @@
             this.tabLocks.Location = new System.Drawing.Point(8, 39);
             this.tabLocks.Name = "tabLocks";
             this.tabLocks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabLocks.Size = new System.Drawing.Size(554, 533);
+            this.tabLocks.Size = new System.Drawing.Size(584, 503);
             this.tabLocks.TabIndex = 1;
             this.tabLocks.Text = "Locks";
             this.tabLocks.UseVisualStyleBackColor = true;
@@ -137,107 +139,116 @@
             // 
             this.checklistLocks.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.checklistLocks.FormattingEnabled = true;
-            this.checklistLocks.Location = new System.Drawing.Point(7, 1);
+            this.checklistLocks.Location = new System.Drawing.Point(0, 0);
             this.checklistLocks.Name = "checklistLocks";
-            this.checklistLocks.Size = new System.Drawing.Size(551, 496);
+            this.checklistLocks.Size = new System.Drawing.Size(584, 578);
             this.checklistLocks.TabIndex = 2;
             // 
             // cbFactionPool
             // 
+            this.cbFactionPool.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbFactionPool.FormattingEnabled = true;
-            this.cbFactionPool.Location = new System.Drawing.Point(173, 740);
+            this.cbFactionPool.Location = new System.Drawing.Point(250, 675);
             this.cbFactionPool.Name = "cbFactionPool";
-            this.cbFactionPool.Size = new System.Drawing.Size(396, 33);
+            this.cbFactionPool.Size = new System.Drawing.Size(360, 45);
             this.cbFactionPool.TabIndex = 13;
             this.cbFactionPool.Visible = false;
             // 
             // tbFactionPool
             // 
-            this.tbFactionPool.Location = new System.Drawing.Point(20, 740);
+            this.tbFactionPool.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbFactionPool.Location = new System.Drawing.Point(10, 675);
             this.tbFactionPool.Name = "tbFactionPool";
             this.tbFactionPool.ReadOnly = true;
-            this.tbFactionPool.Size = new System.Drawing.Size(140, 31);
+            this.tbFactionPool.Size = new System.Drawing.Size(210, 44);
             this.tbFactionPool.TabIndex = 12;
-            this.tbFactionPool.Text = "Faction Pool :";
+            this.tbFactionPool.Text = "Add Faction :";
             this.tbFactionPool.Visible = false;
             // 
             // tvPlayers
             // 
-            this.tvPlayers.Location = new System.Drawing.Point(20, 20);
+            this.tvPlayers.Location = new System.Drawing.Point(10, 10);
             this.tvPlayers.Name = "tvPlayers";
-            this.tvPlayers.Size = new System.Drawing.Size(570, 675);
+            this.tvPlayers.Size = new System.Drawing.Size(600, 600);
             this.tvPlayers.TabIndex = 12;
             this.tvPlayers.Visible = false;
             // 
             // tbSelectionNote
             // 
-            this.tbSelectionNote.Location = new System.Drawing.Point(20, 700);
+            this.tbSelectionNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSelectionNote.Location = new System.Drawing.Point(10, 620);
             this.tbSelectionNote.Name = "tbSelectionNote";
             this.tbSelectionNote.ReadOnly = true;
-            this.tbSelectionNote.Size = new System.Drawing.Size(570, 31);
+            this.tbSelectionNote.Size = new System.Drawing.Size(600, 44);
             this.tbSelectionNote.TabIndex = 4;
             this.tbSelectionNote.Visible = false;
             // 
             // cbPlayerCount
             // 
+            this.cbPlayerCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPlayerCount.FormattingEnabled = true;
             this.cbPlayerCount.Items.AddRange(new object[] {
             "2",
             "3",
             "4",
             "5"});
-            this.cbPlayerCount.Location = new System.Drawing.Point(182, 12);
+            this.cbPlayerCount.Location = new System.Drawing.Point(250, 10);
             this.cbPlayerCount.Name = "cbPlayerCount";
-            this.cbPlayerCount.Size = new System.Drawing.Size(402, 33);
+            this.cbPlayerCount.Size = new System.Drawing.Size(360, 45);
             this.cbPlayerCount.TabIndex = 7;
             this.cbPlayerCount.Visible = false;
             // 
             // tbPlayerCount
             // 
-            this.tbPlayerCount.Location = new System.Drawing.Point(20, 12);
+            this.tbPlayerCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPlayerCount.Location = new System.Drawing.Point(10, 10);
             this.tbPlayerCount.Name = "tbPlayerCount";
             this.tbPlayerCount.ReadOnly = true;
-            this.tbPlayerCount.Size = new System.Drawing.Size(156, 31);
+            this.tbPlayerCount.Size = new System.Drawing.Size(210, 44);
             this.tbPlayerCount.TabIndex = 8;
             this.tbPlayerCount.Text = "Player Count :";
             this.tbPlayerCount.Visible = false;
+            this.tbPlayerCount.TextChanged += new System.EventHandler(this.tbPlayerCount_TextChanged);
             // 
             // tbGameMode
             // 
-            this.tbGameMode.Location = new System.Drawing.Point(20, 49);
+            this.tbGameMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbGameMode.Location = new System.Drawing.Point(10, 65);
             this.tbGameMode.Name = "tbGameMode";
             this.tbGameMode.ReadOnly = true;
-            this.tbGameMode.Size = new System.Drawing.Size(156, 31);
+            this.tbGameMode.Size = new System.Drawing.Size(210, 44);
             this.tbGameMode.TabIndex = 9;
             this.tbGameMode.Text = "Game Mode :";
             this.tbGameMode.Visible = false;
             // 
             // cbGameMode
             // 
+            this.cbGameMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGameMode.FormattingEnabled = true;
-            this.cbGameMode.Location = new System.Drawing.Point(182, 49);
+            this.cbGameMode.Location = new System.Drawing.Point(250, 65);
             this.cbGameMode.Name = "cbGameMode";
-            this.cbGameMode.Size = new System.Drawing.Size(402, 33);
+            this.cbGameMode.Size = new System.Drawing.Size(360, 45);
             this.cbGameMode.TabIndex = 10;
             this.cbGameMode.Visible = false;
             this.cbGameMode.SelectedIndexChanged += new System.EventHandler(this.cbGameMode_SelectedIndexChanged);
             // 
             // tbGameModeDescription
             // 
-            this.tbGameModeDescription.Location = new System.Drawing.Point(20, 90);
+            this.tbGameModeDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbGameModeDescription.Location = new System.Drawing.Point(10, 125);
             this.tbGameModeDescription.Multiline = true;
             this.tbGameModeDescription.Name = "tbGameModeDescription";
             this.tbGameModeDescription.ReadOnly = true;
-            this.tbGameModeDescription.Size = new System.Drawing.Size(570, 90);
+            this.tbGameModeDescription.Size = new System.Drawing.Size(600, 100);
             this.tbGameModeDescription.TabIndex = 11;
             this.tbGameModeDescription.Visible = false;
             // 
             // btnDraft
             // 
             this.btnDraft.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDraft.Location = new System.Drawing.Point(20, 785);
+            this.btnDraft.Location = new System.Drawing.Point(10, 750);
             this.btnDraft.Name = "btnDraft";
-            this.btnDraft.Size = new System.Drawing.Size(570, 70);
+            this.btnDraft.Size = new System.Drawing.Size(300, 70);
             this.btnDraft.TabIndex = 12;
             this.btnDraft.Text = "Draft!";
             this.btnDraft.UseVisualStyleBackColor = true;
@@ -246,28 +257,31 @@
             // 
             // tbSwap
             // 
-            this.tbSwap.Location = new System.Drawing.Point(20, 785);
+            this.tbSwap.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSwap.Location = new System.Drawing.Point(10, 730);
             this.tbSwap.Name = "tbSwap";
             this.tbSwap.ReadOnly = true;
-            this.tbSwap.Size = new System.Drawing.Size(275, 31);
+            this.tbSwap.Size = new System.Drawing.Size(210, 44);
             this.tbSwap.TabIndex = 14;
+            this.tbSwap.Text = "Drop Faction :";
             this.tbSwap.Visible = false;
             // 
             // cbSwap
             // 
+            this.cbSwap.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbSwap.FormattingEnabled = true;
-            this.cbSwap.Location = new System.Drawing.Point(20, 820);
+            this.cbSwap.Location = new System.Drawing.Point(250, 730);
             this.cbSwap.Name = "cbSwap";
-            this.cbSwap.Size = new System.Drawing.Size(275, 33);
+            this.cbSwap.Size = new System.Drawing.Size(360, 45);
             this.cbSwap.TabIndex = 15;
             this.cbSwap.Visible = false;
             // 
             // btnSwap
             // 
             this.btnSwap.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSwap.Location = new System.Drawing.Point(300, 785);
+            this.btnSwap.Location = new System.Drawing.Point(10, 800);
             this.btnSwap.Name = "btnSwap";
-            this.btnSwap.Size = new System.Drawing.Size(290, 70);
+            this.btnSwap.Size = new System.Drawing.Size(300, 70);
             this.btnSwap.TabIndex = 16;
             this.btnSwap.Text = "Swap!";
             this.btnSwap.UseVisualStyleBackColor = true;
@@ -276,30 +290,57 @@
             // 
             // cbDrop
             // 
+            this.cbDrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbDrop.FormattingEnabled = true;
-            this.cbDrop.Location = new System.Drawing.Point(20, 740);
+            this.cbDrop.Location = new System.Drawing.Point(10, 680);
             this.cbDrop.Name = "cbDrop";
-            this.cbDrop.Size = new System.Drawing.Size(570, 33);
+            this.cbDrop.Size = new System.Drawing.Size(600, 45);
             this.cbDrop.TabIndex = 17;
             this.cbDrop.Visible = false;
             // 
             // btnDrop
             // 
             this.btnDrop.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDrop.Location = new System.Drawing.Point(20, 785);
+            this.btnDrop.Location = new System.Drawing.Point(10, 750);
             this.btnDrop.Name = "btnDrop";
-            this.btnDrop.Size = new System.Drawing.Size(570, 70);
+            this.btnDrop.Size = new System.Drawing.Size(600, 70);
             this.btnDrop.TabIndex = 18;
             this.btnDrop.Text = "Drop";
             this.btnDrop.UseVisualStyleBackColor = true;
             this.btnDrop.Visible = false;
             this.btnDrop.Click += new System.EventHandler(this.btnDrop_Click);
             // 
+            // btnRandom
+            // 
+            this.btnRandom.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnRandom.Location = new System.Drawing.Point(310, 750);
+            this.btnRandom.Name = "btnRandom";
+            this.btnRandom.Size = new System.Drawing.Size(300, 70);
+            this.btnRandom.TabIndex = 19;
+            this.btnRandom.Text = "Random";
+            this.btnRandom.UseVisualStyleBackColor = true;
+            this.btnRandom.Visible = false;
+            this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
+            // 
+            // btnPass
+            // 
+            this.btnPass.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPass.Location = new System.Drawing.Point(310, 800);
+            this.btnPass.Name = "btnPass";
+            this.btnPass.Size = new System.Drawing.Size(300, 70);
+            this.btnPass.TabIndex = 20;
+            this.btnPass.Text = "Pass";
+            this.btnPass.UseVisualStyleBackColor = true;
+            this.btnPass.Visible = false;
+            this.btnPass.Click += new System.EventHandler(this.btnPass_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(624, 879);
+            this.Controls.Add(this.btnPass);
+            this.Controls.Add(this.btnRandom);
             this.Controls.Add(this.btnDrop);
             this.Controls.Add(this.cbDrop);
             this.Controls.Add(this.btnSwap);
@@ -356,6 +397,8 @@
         private System.Windows.Forms.Button btnSwap;
         private System.Windows.Forms.ComboBox cbDrop;
         private System.Windows.Forms.Button btnDrop;
+        private System.Windows.Forms.Button btnRandom;
+        private System.Windows.Forms.Button btnPass;
     }
 }
 

@@ -409,6 +409,7 @@ namespace Smash_Up_Faction_Randomizer
             tbFactionPool.Visible = true;
             cbFactionPool.Visible = true;
             btnDraft.Visible = true;
+            btnRandom.Visible = true;
         }
 
         /// <summary>
@@ -420,6 +421,7 @@ namespace Smash_Up_Faction_Randomizer
             tbFactionPool.Visible = false;
             cbFactionPool.Visible = false;
             btnDraft.Visible = false;
+            btnRandom.Visible = false;
         }
 
         /// <summary>
@@ -487,6 +489,50 @@ namespace Smash_Up_Faction_Randomizer
             }
         }
 
+        private void btnRandom_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            // Update the Players and Pool datasets and also the treeview
+            string selection = cbFactionPool.Items[random.Next(0, cbFactionPool.Items.Count)].ToString();
+            tvPlayers.BeginUpdate();
+            SmashUp.Pool.Remove(selection);
+            tvPlayers.Nodes["Faction Pool"].Nodes[selection].Remove();
+            SmashUp.Players["Player " + (SmashUp.iPlayers + 1).ToString()].Add(selection);
+            tvPlayers.Nodes["Player " + (SmashUp.iPlayers + 1).ToString()].Nodes.Add(selection, selection);
+            tvPlayers.EndUpdate();
+            tvPlayers.ExpandAll();
+
+            // Once the controls are updated, we'll need to make a decision based on which player we're at
+            // The draft order should be reversed whenever we reach the last player.
+            // So for example, if the first draft goes from players 1 to 3, the next draft should go from players 3 to 1
+            // This is accomplished by maintaining a flag called DraftReversed - whenever we reach the end of a draft round, we change it's value
+            // So we need to check if we're at the last player of the draft round, based on iPlayers and DraftReversed
+            if ((SmashUp.DraftReversed && SmashUp.iPlayers == 0) || (!SmashUp.DraftReversed && SmashUp.iPlayers >= SmashUp.Players.Count - 1))
+            {
+                SmashUp.DraftReversed = !SmashUp.DraftReversed;
+                // Since we've reached the end of the draft round, proceed to the next node - note that it may not necessarily be another draft
+                hideDraftControls();
+                SmashUp.iMode++;
+                processNextMode();
+            }
+            // Otherwise, we aren't at the end of a draft round, so we need to update iPlayers and the draft controls
+            else
+            {
+                // If the draft isn't reversed iPlayers increases
+                if (!SmashUp.DraftReversed)
+                {
+                    SmashUp.iPlayers++;
+                }
+                // If the draft is reversed, iPlayers decreases
+                else
+                {
+                    SmashUp.iPlayers--;
+                }
+                // Update the draft controls, as we need to proceed to the next player
+                updateDraftControls();
+            }
+        }
+
         /// <summary>
         /// Method that displays the swap controls
         /// </summary>
@@ -498,6 +544,7 @@ namespace Smash_Up_Faction_Randomizer
             tbSwap.Visible = true;
             cbSwap.Visible = true;
             btnSwap.Visible = true;
+            btnPass.Visible = true;
         }
 
         /// <summary>
@@ -511,6 +558,7 @@ namespace Smash_Up_Faction_Randomizer
             tbSwap.Visible = false;
             cbSwap.Visible = false;
             btnSwap.Visible = false;
+            btnPass.Visible = false;
         }
 
         /// <summary>
@@ -527,7 +575,6 @@ namespace Smash_Up_Faction_Randomizer
                 cbFactionPool.Items.Add(faction);
             }
             cbFactionPool.SelectedIndex = 0;
-            tbSwap.Text = "Player " + (SmashUp.iPlayers + 1).ToString() + "'s faction to swap";
             // Clear the swap combox box and re-add the factions - this is required as the player should be different
             cbSwap.Items.Clear();
             foreach (string faction in SmashUp.Players["Player " + (SmashUp.iPlayers + 1).ToString()])
@@ -564,6 +611,31 @@ namespace Smash_Up_Faction_Randomizer
             tvPlayers.EndUpdate();
             tvPlayers.ExpandAll();
 
+            // For now, we'll assume that swaps always start from Player 1 and iPlayers increases
+            // It probably should actually reverse order like the drafts do, but we should consider the funtionality
+            // Should Draft, Swap & Drop all share one flag or separate flags? This is actually a serious consideration
+            if (SmashUp.iPlayers >= SmashUp.Players.Count - 1)
+            {
+                hideSwapControls();
+                SmashUp.iMode++;
+                SmashUp.iPlayers = 0;
+                processNextMode();
+            }
+            else
+            {
+                SmashUp.iPlayers++;
+                updateSwapControls();
+            }
+        }
+
+        /// <summary>
+        /// Event method triggered when the user clicks the Pass button.
+        /// Passes instead of swaping
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPass_Click(object sender, EventArgs e)
+        {
             // For now, we'll assume that swaps always start from Player 1 and iPlayers increases
             // It probably should actually reverse order like the drafts do, but we should consider the funtionality
             // Should Draft, Swap & Drop all share one flag or separate flags? This is actually a serious consideration
@@ -655,6 +727,10 @@ namespace Smash_Up_Faction_Randomizer
         }
         #endregion
 
+        private void tbPlayerCount_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
     /// <summary>
